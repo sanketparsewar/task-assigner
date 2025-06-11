@@ -1,11 +1,13 @@
 import { TaskService } from './../services/task/task.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-view-task',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './view-task.component.html',
   styleUrl: './view-task.component.css'
 })
@@ -31,39 +33,46 @@ export class ViewTaskComponent implements OnInit {
   //     remainingPayment: 100,
   //     completed: true,
   //   },
-  //   { id:'2',
-  //     title: 'Fix Pipe',
-  //     description: 'Repairing the kitchen sink pipe',
-  //     dueDate: '2023-10-10',
-  //     assignedTo: 'Bob',
-  //     customer: {
-  //       name: 'Jane Smith',
-  //       number: '9876543210',
-  //       address: '456 Elm St, Springfield'
-  //     },
-  //     customerName: 'Jane Smith',
-  //     customerNumber: '9876543210',
-  //     customerAddress: '456 Elm St, Springfield',
-  //     noOfRolls: null,
-  //     paymentStatus: 'Completed',
-  //     areaSize: null,
-  //     roomType: 'Kitchen',
-  //     remainingPayment: 0,
-  //     completed: false,
-  //   }
   // ];
-  tasks: any[]=[];
+  tasks: any[] = [];
 
-  constructor(private taskservice:TaskService){this.taskservice.getTasks().subscribe({
-    next: (data) => {
-      this.tasks = data;
-      console.log(this.tasks)
-    }
-  })}
+  query = {
+    searchQuery: '',
+    sortOrder: 'desc',
+    filterCondition: 'all',
+  };
 
-  ngOnInit() {
-    
+  private searchSubject = new Subject<string>();
+
+  constructor(private taskService: TaskService) {
+    this.getTasks();
   }
 
+  ngOnInit() {
+    this.searchSubject.pipe(
+      debounceTime(500) // adjust debounce time as needed
+    ).subscribe(() => {
+      this.getTasks();
+    });
+  }
+
+  search(event: any) {
+    this.searchSubject.next(event.target.value);
+  }
+
+  filterChange(event: any) {
+    this.getTasks(); // no debounce needed for dropdowns
+  }
+
+  getTasks() {
+    this.taskService.getTasks(this.query).subscribe({
+      next: (data) => {
+        this.tasks = data;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
 
 }

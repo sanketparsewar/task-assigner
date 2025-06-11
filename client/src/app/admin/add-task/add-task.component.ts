@@ -34,6 +34,10 @@ export class AddTaskComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.getCustomers()
+  }
+
+  getCustomers() {
     this.customerService.getCustomers().subscribe({
       next: (customers) => this.customers = customers,
       error: (error) => console.log(error)

@@ -1,26 +1,35 @@
-<div class="flex ">
-    <!-- Sidebar -->
-    <div class="h-screen w-1/6 bg-gray-800 text-white p-6 hidden md:block">
-        <h2 class="text-xl font-bold mb-6">Menu</h2>
+<div class="flex flex-col md:flex-row min-h-screen">
+    <!-- Desktop Sidebar -->
+    <aside class="hidden md:block w-1/6 bg-gray-800 text-white p-6">
+        <h2 class="text-xl font-bold mb-6">Tasker</h2>
         <ul>
+
             <li class="mb-4">
-                <a href="/admin/add-task" class="text-gray-300 hover:text-white transition">Add Task</a>
+                <a routerLink="/admin/tasks" routerLinkActive="text-white"
+                    class="block text-gray-300 hover:text-white transition"><i class="fa-solid fa-list"></i> Tasks</a>
             </li>
             <li class="mb-4">
-                <a href="/admin/tasks" class="text-gray-300 hover:text-white transition">Tasks</a>
+                <a routerLink="/admin/add-task" routerLinkActive="text-white"
+                    class="block text-gray-300 hover:text-white transition"> <i class="fa-solid fa-circle-plus"></i> Add
+                    Task</a>
             </li>
             <li class="mb-4">
-                <a href="/admin/dashboard" class="text-gray-300 hover:text-white transition">Dashboard</a>
+                <a routerLink="/admin/dashboard" routerLinkActive="text-white"
+                    class="block text-gray-300 hover:text-white transition"><i class="fa-solid fa-border-all"></i>
+                    Dashboard</a>
             </li>
             <li class="mb-4">
-                <a href="/admin/settings" class="text-gray-300 hover:text-white transition">Settings</a>
+                <a routerLink="/admin/settings" routerLinkActive="text-white"
+                    class="block text-gray-300 hover:text-white transition"><i class="fa-solid fa-gear"></i>
+                    Settings</a>
             </li>
         </ul>
-    </div>
+    </aside>
 
-    <!-- Burger Menu for Small Devices -->
-    <div class="md:hidden bg-gray-800 text-white p-4">
-        <button (click)="toggleMenu()" class="text-white">
+    <!-- Mobile Top Bar -->
+    <div class="md:hidden sticky bg-gray-800 text-white flex justify-between items-center p-4">
+        <h2 class="text-xl font-bold">Tasker</h2>
+        <button (click)="toggleMenu()" aria-label="Toggle Menu">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -28,35 +37,47 @@
         </button>
     </div>
 
-    <!-- Sidebar for Small Devices -->
-    <div *ngIf="menuOpen"
-        class="h-screen absolute top-0 left-0 w-2/3 bg-gray-800 text-white p-6 z-50 transition-transform duration-500 transform translate-x-0">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-bold">Menu</h2>
-            <button (click)="toggleMenu()" class="text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-        <ul>
-            <li class="mb-4">
-                <a href="/admin/add-task" class="text-gray-300 hover:text-white transition">Add Task</a>
-            </li>
-            <li class="mb-4">
-                <a href="/admin/tasks" class="text-gray-300 hover:text-white transition">Tasks</a>
-            </li>
-            <li class="mb-4">
-                <a href="/admin/dashboard" class="text-gray-300 hover:text-white transition">Dashboard</a>
-            </li>
-            <li class="mb-4">
-                <a href="/admin/settings" class="text-gray-300 hover:text-white transition">Settings</a>
-            </li>
-        </ul>
+    <!-- Mobile Sidebar Overlay -->
+    <div *ngIf="menuOpen" class="fixed inset-0 z-50 " (click)="toggleMenu()">
+        <aside class="absolute left-0 top-0 w-full bg-gray-800 text-white p-4" (click)="$event.stopPropagation()">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold">Tasker</h2>
+                <button (click)="toggleMenu()" aria-label="Close Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <ul>
+                <li (click)="toggleMenu()" class="mb-4">
+                    <a routerLink="/admin/tasks" routerLinkActive="text-white"
+                        class="block text-gray-300 hover:text-white transition"><i class="fa-solid fa-list"></i>
+                        Tasks</a>
+                </li>
+                <li (click)="toggleMenu()" class="mb-4">
+                    <a routerLink="/admin/add-task" routerLinkActive="text-white"
+                        class="block text-gray-300 hover:text-white transition"> <i class="fa-solid fa-circle-plus"></i>
+                        Add Task</a>
+                </li>
+
+                <li (click)="toggleMenu()" class="mb-4">
+                    <a routerLink="/admin/dashboard" routerLinkActive="text-white"
+                        class="block text-gray-300 hover:text-white transition"><i class="fa-solid fa-border-all"></i>
+                        Dashboard</a>
+                </li>
+                <li (click)="toggleMenu()" class="mb-4">
+                    <a routerLink="/admin/settings" routerLinkActive="text-white"
+                        class="block text-gray-300 hover:text-white transition"><i class="fa-solid fa-gear"></i>
+                        Settings</a>
+                </li>
+            </ul>
+        </aside>
     </div>
 
-    <div class="w-full md:w-5/6 bg-gray-100 p-8">
+    <!-- Main Content Area -->
+    <main class="flex-1 p-6 md:p-8 bg-gray-50 overflow-y-auto">
         <router-outlet></router-outlet>
-    </div>
+    </main>
 </div>

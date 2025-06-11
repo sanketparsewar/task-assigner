@@ -1,13 +1,14 @@
 import { TaskService } from './../services/task/task.service';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EditTaskComponent } from '../../shared/components/edit-task/edit-task.component';
 
 @Component({
   selector: 'app-task-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, EditTaskComponent],
   templateUrl: './task-detail.component.html',
-  styleUrl: './task-detail.component.css'
+  styleUrl: './task-detail.component.css',
 })
 export class TaskDetailComponent {
   // task = {
@@ -30,31 +31,52 @@ export class TaskDetailComponent {
   //   completed: true,
   //   status: 'Pending'
   // };
-  task: any;
+  @ViewChild(EditTaskComponent) editTaskComponent!: EditTaskComponent;
 
-  constructor(private taskService: TaskService, private activatedRoute: ActivatedRoute, private router: Router) {
+  task: any;
+  taskId: string = ''
+  constructor(
+    private taskService: TaskService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
     this.activatedRoute.params.subscribe((param) => {
-      if (param['id'])
-        this.taskService.getTaskById(param['id']).subscribe({
-          next: (data) => {
-            this.task = data
-            console.log(data)
-          }, error: (error) => {
-            console.log(error)
-          }
-        })
-    })
+      if (param['id']) {
+        this.taskId = param['id'];
+        this.getTask()
+      }
+    });
   }
+
+
+  getTask() {
+    this.taskService.getTaskById(this.taskId).subscribe({
+      next: (data) => {
+        this.task = data;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  openEditTaskModal(task: any) {
+    this.editTaskComponent.openModal(task);
+  }
+
   deleteTask(id: string) {
     this.taskService.deleteTask(id).subscribe({
       next: (res) => {
-        console.log('deleted')
-        this.router.navigate(['admin', 'tasks'])
+        console.log('deleted');
+        this.router.navigate(['admin', 'tasks']);
       },
       error: (error) => {
-        console.log(error)
-      }
-    })
+        console.log(error);
+      },
+    });
+  }
 
+  back() {
+    history.back();
   }
 }

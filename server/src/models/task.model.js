@@ -14,21 +14,13 @@ const TaskSchema = new mongoose.Schema({
         required: true,
     },
     assignedTo: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
     },
     customer: {
-        name: {
-            type: String,
-            required: true,
-        },
-        number: {
-            type: String,
-            required: true,
-        },
-        address: {
-            type: String,
-            required: true,
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Customer',
+        required: true
     },
     noOfRolls: {
         type: Number,

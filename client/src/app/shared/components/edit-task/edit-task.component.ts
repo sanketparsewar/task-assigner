@@ -1,3 +1,4 @@
+import { WorkerService } from './../../../admin/services/worker/worker.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TaskService } from '../../../admin/services/task/task.service';
@@ -17,21 +18,26 @@ export class EditTaskComponent implements OnInit {
   taskForm!: FormGroup;
   task: any;
   customers: any[] = [];
-  constructor(private fb: FormBuilder, private taskService: TaskService, private customerService: CustomerService) { }
-  workers = [
-    'Alice',
-    'Bob',
-    'Charlie',
-  ];
+  constructor(private fb: FormBuilder, private workerService: WorkerService, private taskService: TaskService, private customerService: CustomerService) { }
+  workers: any[] = []
 
   ngOnInit() {
     this.getCustomers()
+    this.getWorkerList()
+
   }
 
   getCustomers() {
     this.customerService.getCustomers().subscribe({
       next: (customers) => { this.customers = customers },
       error: (error) => console.log(error)
+    })
+  }
+
+  getWorkerList() {
+    this.workerService.getWorkerList().subscribe({
+      next: (workers) => this.workers = workers,
+      error: (error) => console.log('error getting worker list', error)
     })
   }
 
@@ -45,13 +51,16 @@ export class EditTaskComponent implements OnInit {
     const selectedCustomer = this.customers.find(
       (c) => c.name === task.customer?.name && c.number === task.customer?.number
     );
+    const selectedWorker = this.workers.find(
+      (c) => c.name === task.assignedTo?.name && c.phone === task.assignedTo?.phone
+    );
 
     this.taskForm = this.fb.group({
       id: [task._id],
       title: [task.title || ''],
       description: [task.description || ''],
       dueDate: [this.formatDate(task.dueDate) || ''],
-      assignedTo: [task.assignedTo || ''],
+      assignedTo: [selectedWorker || null],
       customer: [selectedCustomer || null],
       noOfRolls: [task.noOfRolls || null],
       paymentStatus: [task.paymentStatus || 'Unpaid'],

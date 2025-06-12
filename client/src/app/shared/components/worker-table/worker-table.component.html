@@ -1,0 +1,117 @@
+<div>
+    <h1 class="my-2 ">
+        <span class="font-medium text-xl">Workers List</span>
+        <button (click)="showAddWorker = !showAddWorker"
+            class="bg-blue-500 hover:bg-blue-600 cursor-pointer px-3 text-white font-semibold  rounded-2xl mx-2">
+            <i class="fa-solid transition-transform duration-300"
+                [ngClass]="showAddWorker ? 'fa-minus rotate-180' : 'fa-plus rotate-0'"></i>
+            <span class="transition-opacity duration-300">
+                {{ showAddWorker ? 'Close form' : 'Add new worker' }}
+            </span>
+        </button>
+    </h1>
+
+    <!-- Accordion form -->
+    <div class="overflow-hidden transition-all duration-500" [style.maxHeight]="showAddWorker ? '500px' : '0px'">
+        <form [formGroup]="workerForm" (ngSubmit)="addWorker()"
+            class="grid grid-cols-1 md:grid-cols-2 gap-3 bg-white p-4 rounded-xl shadow-md border border-gray-200 mb-6">
+            <!-- Name -->
+            <div class="flex flex-col">
+                <label for="name" class="mb-1 text-sm font-medium text-gray-700">Name</label>
+                <input id="name" type="text" formControlName="name" placeholder="Enter full name"
+                    class="px-4 py-2 border placeholder:text-gray-500 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <div *ngIf="workerForm.get('name')?.touched && workerForm.get('name')?.invalid"
+                    class="text-sm text-red-600 mt-1">
+                    <div *ngIf="workerForm.get('name')?.errors?.['required']">Name is required.</div>
+                    <div *ngIf="workerForm.get('name')?.errors?.['minlength']">Name must be at least 3
+                        characters.</div>
+                    <div *ngIf="workerForm.get('name')?.errors?.['pattern']">Name should contain only
+                        letters and spaces.</div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="flex flex-col">
+                <label for="email" class="mb-1 text-sm font-medium text-gray-700">Email</label>
+                <input id="email" type="email" formControlName="email" placeholder="Enter email address"
+                    class="px-4 py-2 border placeholder:text-gray-500 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <div *ngIf="workerForm.get('email')?.touched && workerForm.get('email')?.invalid"
+                    class="text-sm text-red-600 mt-1">
+                    <div *ngIf="workerForm.get('email')?.errors?.['required']">Email is required.
+                    </div>
+                    <div *ngIf="workerForm.get('email')?.errors?.['email']">Enter a valid email
+                        address.</div>
+                </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="flex flex-col">
+                <label for="phone" class="mb-1 text-sm font-medium text-gray-700">Phone</label>
+                <input id="phone" type="tel" formControlName="phone" placeholder="Enter phone number"
+                    class="px-4 py-2 border placeholder:text-gray-500 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <div *ngIf="workerForm.get('phone')?.touched && workerForm.get('phone')?.invalid"
+                    class="text-sm text-red-600 mt-1">
+                    <div *ngIf="workerForm.get('phone')?.errors?.['required']">Phone is required.
+                    </div>
+                    <div *ngIf="workerForm.get('phone')?.errors?.['pattern']">Phone must be a 10-digit
+                        number.</div>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="flex flex-col">
+                <label for="password" class="mb-1 text-sm font-medium text-gray-700">Password</label>
+                <input id="password" type="password" formControlName="password" placeholder="Create password"
+                    class="px-4 py-2 border placeholder:text-gray-500 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <div *ngIf="workerForm.get('password')?.touched && workerForm.get('password')?.invalid"
+                    class="text-sm text-red-600 mt-1">
+                    <div *ngIf="workerForm.get('password')?.errors?.['required']">Password is
+                        required.</div>
+                    <div *ngIf="workerForm.get('password')?.errors?.['minlength']">Password must be at
+                        least 6 characters.</div>
+                    <div *ngIf="workerForm.get('password')?.errors?.['pattern']">Password must include
+                        uppercase, lowercase, and a number.</div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-span-1 md:col-span-2 flex justify-end">
+                <button type="submit" [disabled]="workerForm.invalid"
+                    class="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-semibold py-2 px-6 rounded-lg shadow transition">
+                    <i class="fa-solid fa-floppy-disk mr-2"></i>Save Worker
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Worker table -->
+    <div class="md:block overflow-x-auto">
+        <table class="table-auto w-full border-collapse border border-gray-800 transition-shadow">
+            <thead>
+                <tr class="bg-gray-800 text-white text-xs">
+                    <th class="border border-gray-500 uppercase px-2 py-1">#</th>
+                    <th class="border border-gray-500 uppercase px-2 py-1">Name</th>
+                    <th class="border border-gray-500 uppercase px-2 py-1">Email</th>
+                    <th class="border border-gray-500 uppercase px-2 py-1">Phone</th>
+                    <th class="border border-gray-500 uppercase px-2 py-1">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let worker of workers; let i = index" class="hover:bg-gray-200 text-sm">
+                    <td class="border px-4 py-2 font-bold">{{ i + 1 }}</td>
+                    <td class="border px-4 py-2">{{ worker?.name }}</td>
+                    <td class="border px-4 py-2">{{ worker?.email }}</td>
+                    <td class="border px-4 py-2">{{ worker?.phone }}</td>
+                    <td class="border px-4 py-2 text-center">
+                        <button class="px-3 md:me-1 py-2 bg-blue-300 rounded-md">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button (click)="deleteWorker(worker?._id)" class="px-3  py-2 bg-red-300 rounded-md">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

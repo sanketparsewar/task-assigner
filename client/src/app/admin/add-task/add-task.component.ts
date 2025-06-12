@@ -1,3 +1,4 @@
+import { WorkerService } from './../services/worker/worker.service';
 import { CustomerService } from './../services/customer/customer.service';
 import { TaskService } from './../services/task/task.service';
 import { CommonModule } from '@angular/common';
@@ -16,7 +17,7 @@ export class AddTaskComponent implements OnInit {
     description: '',
     dueDate: '',
     assignedTo: '',
-    customer: {},
+    customer: '',
     noOfRolls: null,
     paymentStatus: 'Unpaid',
     areaSize: '',
@@ -26,15 +27,12 @@ export class AddTaskComponent implements OnInit {
   };
 
   customers: any[] = [];
-  constructor(private taskService: TaskService, private customerService: CustomerService) { }
-  workers = [
-    'Alice',
-    'Bob',
-    'Charlie',
-  ];
+  workers: any[] = [];
+  constructor(private taskService: TaskService, private workerService: WorkerService, private customerService: CustomerService) { }
 
   ngOnInit() {
     this.getCustomers()
+    this.getWorkerList()
   }
 
   getCustomers() {
@@ -44,6 +42,12 @@ export class AddTaskComponent implements OnInit {
     })
   }
 
+  getWorkerList() {
+    this.workerService.getWorkerList().subscribe({
+      next: (workers) => this.workers = workers,
+      error: (error) => console.log('error getting worker list',error)
+    })
+  }
 
   addTask() {
     this.taskService.createTask(this.task).subscribe({
@@ -61,8 +65,7 @@ export class AddTaskComponent implements OnInit {
       description: '',
       dueDate: '',
       assignedTo: '',
-      customer: {
-      },
+      customer: '',
       noOfRolls: null,
       paymentStatus: 'Unpaid',
       areaSize: '',

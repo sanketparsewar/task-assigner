@@ -20,11 +20,11 @@ export class ViewTaskComponent implements OnInit {
   //     assignedTo: 'Alice',
   //     customer: {
   //       name: 'John Doe',
-  //       number: '1234567890',
+  //       phone: '1234567890',
   //       address: '123 Main St, Springfield'
   //     },
   //     customerName: 'John Doe',
-  //     customerNumber: '1234567890',
+  //     customerPhone: '1234567890',
   //     customerAddress: '123 Main St, Springfield',
   //     noOfRolls: 5,
   //     paymentStatus: 'Unpaid',
@@ -68,6 +68,7 @@ export class ViewTaskComponent implements OnInit {
     this.taskService.getTasks(this.query).subscribe({
       next: (data) => {
         this.tasks = data;
+        
       },
       error: (error) => {
         console.error(error);

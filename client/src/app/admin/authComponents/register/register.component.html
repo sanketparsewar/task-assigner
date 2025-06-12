@@ -1,0 +1,99 @@
+<!-- From Uiverse.io by Shamaun-Nabi -->
+<div class="mx-auto w-full max-w-md p-6">
+    <section class="">
+        <div class="flex items-center justify-center my-3">
+            <div class="mx-auto w-full max-w-md shadow-lg p-6 ">
+                <h2 class="text-2xl font-bold leading-tight">
+                    Sign up
+                </h2>
+                <p class=" text-base text-gray-600">
+                    Already have an account? <span class="text-blue-500 cursor-pointer"
+                        routerLink="/admin/auth/login">Sign In</span>
+                </p>
+                <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="mt-5">
+                    <div class="space-y-2">
+
+                        <!-- Name -->
+                        <div>
+                            <label class="text-base font-medium text-gray-900">User Name</label>
+                            <div class="">
+                                <input placeholder="Full Name" type="text" formControlName="name"
+                                    class="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400" />
+                                <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid"
+                                    class="text-sm text-red-600 mt-1">
+                                    <div *ngIf="registerForm.get('name')?.errors?.['required']">Name is required.</div>
+                                    <div *ngIf="registerForm.get('name')?.errors?.['minlength']">Name must be at least 3
+                                        characters.</div>
+                                    <div *ngIf="registerForm.get('name')?.errors?.['pattern']">Name should contain only
+                                        letters and spaces.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="text-base font-medium text-gray-900">Email address</label>
+                            <div class="  ">
+                                <input placeholder="Email" type="email" formControlName="email"
+                                    class="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400" />
+                                <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
+                                    class="text-sm text-red-600 mt-1">
+                                    <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.
+                                    </div>
+                                    <div *ngIf="registerForm.get('email')?.errors?.['email']">Enter a valid email
+                                        address.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div>
+                            <label class="text-base font-medium text-gray-900">Phone</label>
+                            <div class="  ">
+                                <input placeholder="Phone" type="tel" formControlName="phone"
+                                    class="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400" />
+                                <div *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid"
+                                    class="text-sm text-red-600 mt-1">
+                                    <div *ngIf="registerForm.get('phone')?.errors?.['required']">Phone is required.
+                                    </div>
+                                    <div *ngIf="registerForm.get('phone')?.errors?.['pattern']">Phone must be a 10-digit
+                                        number.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label class="text-base font-medium text-gray-900">Password</label>
+                            <div class="  ">
+                                <input placeholder="Password" type="password" formControlName="password"
+                                    class="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400" />
+                                <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
+                                    class="text-sm text-red-600 mt-1">
+                                    <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is
+                                        required.</div>
+                                    <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at
+                                        least 6 characters.</div>
+                                    <div *ngIf="registerForm.get('password')?.errors?.['pattern']">Password must include
+                                        uppercase, lowercase, and a number.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <div>
+                            <button
+                                class=" cursor-pointer inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold text-white hover:bg-black/80"
+                                type="submit" [disabled]="registerForm.invalid">
+                                Create Account
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </section>
+</div>

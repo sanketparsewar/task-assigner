@@ -1,9 +1,25 @@
 <div class="font-sans ">
     <nav class="bg-gray-800 p-3 rounded mb-5">
         <ul class="list-none flex gap-5 m-0 p-0">
-            <li><a href="#" class="text-white no-underline font-bold">Manage Users</a></li>
-            <li><a href="#" class="text-white no-underline font-bold">Add Customer</a></li>
+            <li><button (click)="toggleOption('customer')" [ngClass]="{
+                    'text-blue-300 underline': toggle === 'customer',
+                    'text-white  hover:underline': toggle !== 'customer'
+                }" class="cursor-pointer active:underline text-white  font-bold">Manage
+                    Customers</button></li>
+            <li><button (click)="toggleOption('worker')"[ngClass]="{
+                'text-blue-300 underline': toggle === 'worker',
+                'text-white  hover:underline': toggle !== 'worker'
+            }" class="cursor-pointer active:underline text-white  font-bold">Manage
+                    Workers</button></li>
         </ul>
     </nav>
+
+    <ng-content *ngIf="toggle=='customer'">
+        <app-customer-table></app-customer-table>
+    </ng-content>
+
+    <ng-content *ngIf="toggle=='worker'">
+        <app-worker-table></app-worker-table>
+    </ng-content>
 
 </div>

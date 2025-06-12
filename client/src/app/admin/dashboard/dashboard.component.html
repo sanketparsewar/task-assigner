@@ -1,18 +1,27 @@
-<!-- Main Content -->
-    <div class="bg-white shadow-md rounded-lg p-6">
-        <h1 class="text-2xl font-bold mb-4">Admin Dashboard</h1>
-        <div class="grid grid-cols-3 gap-4">
-            <div class="bg-blue-500 text-white p-4 rounded-lg shadow">
-                <p class="text-lg font-semibold">Total Tasks</p>
-                <p class="text-2xl font-bold">{{ totalTasks }}</p>
-            </div>
-            <div class="bg-green-500 text-white p-4 rounded-lg shadow">
-                <p class="text-lg font-semibold">Completed</p>
-                <p class="text-2xl font-bold">{{ completedTasks }}</p>
-            </div>
-            <div class="bg-yellow-500 text-white p-4 rounded-lg shadow">
-                <p class="text-lg font-semibold">Pending</p>
-                <p class="text-2xl font-bold">{{ pendingTasks }}</p>
-            </div>
-        </div>
+<div class="p-4">
+    <h1 class="text-xl font-semibold mb-3 text-center sm:text-left">Admin Dashboard</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+      <div class="border border-gray-400 text-gray-700 p-4 rounded-md shadow-sm">
+        <p class="text-base font-medium">Total Tasks</p>
+        <p class="text-xl font-bold">{{ dashboardData?.totalTasks }}</p>
+      </div>
+      <div class="border border-gray-400 text-gray-700 p-4 rounded-md shadow-sm">
+        <p class="text-base font-medium">Completed Tasks</p>
+        <p class="text-xl text-green-500 font-bold">{{ dashboardData?.completedTasks }}</p>
+      </div>
+      <div class="border border-gray-400 text-gray-700 p-4 rounded-md shadow-sm">
+        <p class="text-base font-medium">Pending Tasks</p>
+        <p class="text-xl text-yellow-500 font-bold">{{ dashboardData?.pendingTasks }}</p>
+      </div>
+      <div class="border border-gray-400 text-gray-700 p-4 rounded-md shadow-sm">
+        <p class="text-base font-medium">Total Customers</p>
+        <p class="text-xl font-bold">{{ dashboardData?.totalCustomers }}</p>
+      </div>
+      <div class="border border-gray-400 text-gray-700 p-4 rounded-md shadow-sm">
+        <p class="text-base font-medium">Total Workers</p>
+        <p class="text-xl font-bold">{{dashboardData?.totalWorkers}}</p>
+      </div>
+     
     </div>
+  </div>
+  

@@ -6,7 +6,7 @@ import { CustomerService } from './admin/services/customer/customer.service';
 
 @Component({
   selector: 'app-root',
-  imports: [LayoutComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

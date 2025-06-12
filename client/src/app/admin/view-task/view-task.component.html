@@ -34,7 +34,7 @@
                     <th class="border border-gray-300 px-2 py-1 text-left uppercase">Due Date</th>
                     <th class="border border-gray-300 px-2 py-1 text-left uppercase">Assigned To</th>
                     <th class="border border-gray-300 px-2 py-1 text-left uppercase">Cust. Name</th>
-                    <th class="border border-gray-300 px-2 py-1 text-left uppercase">Cust. Number</th>
+                    <th class="border border-gray-300 px-2 py-1 text-left uppercase">Cust. phone</th>
                     <th class="border border-gray-300 px-2 py-1 text-left uppercase">Cust. Address</th>
                     <th class="border border-gray-300 px-2 py-1 text-left uppercase">No of Rolls</th>
                     <th class="border border-gray-300 px-2 py-1 text-left uppercase">Payment Status</th>
@@ -45,7 +45,7 @@
                 <tr *ngFor="let task of tasks;let i=index"
                     class="cursor-pointer hover:bg-gray-200 transition-colors text-sm">
                     <td class="border border-gray-300 px-4 py-2 text-gray-700 font-bold">{{ i+1 }}</td>
-                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task.title }}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task?.title }}</td>
                     <td class="border border-gray-300  py-2 text-gray-700 text-center">
                         <span [ngClass]="{
                             'bg-green-100 text-green-800': task?.completed,
@@ -53,26 +53,33 @@
                           }" class="text-xs font-medium px-2.5 py-0.5 rounded-full">
                             {{ task?.completed ? 'Completed' : 'Pending' }}
                         </span> <br>
-                        <span>{{task.completedDate | date:'d, MMM yy'}}</span>
+                        <span>{{task?.completedDate | date:'d, MMM yy'}}</span>
                     </td>
-                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task.dueDate | date:'d, MMM yy' }}
+                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task?.dueDate | date:'d, MMM yy' }}
                     </td>
-                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task.assignedTo }}</td>
-                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task.customer.name }}</td>
-                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task.customer.number }}</td>
-                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task.customer.address }}</td>
-                    <td class="border border-gray-300 px-4 py-2 text-center text-gray-700">{{ task.noOfRolls }}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-gray-700">
+                        <span *ngIf="task?.assignedTo">
+                            {{ task?.assignedTo?.name }}
+                            </span> 
+                            <span *ngIf="!task?.assignedTo" class="px-2 py-1 bg-red-300 rounded-xl" >
+                            N/A
+                            </span> 
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task?.customer.name }}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task?.customer.phone }}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-gray-700">{{ task?.customer.address }}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-center text-gray-700">{{ task?.noOfRolls }}</td>
                     <td class="border border-gray-300  py-2 text-gray-700 text-center">
                         <span [ngClass]="{
                             ' text-green-800': task?.paymentStatus=='Paid',
                             ' text-yellow-800': task?.paymentStatus=='Partial',
                             ' text-red-800': task?.paymentStatus=='Unpaid'
                           }" class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">
-                            {{ task.paymentStatus }}
+                            {{ task?.paymentStatus }}
                         </span>
                     </td>
                     <td class="border border-gray-300 px-4 py-2 text-gray-700">
-                        <button [routerLink]="['task-detail', task._id]"
+                        <button [routerLink]="['task-detail', task?._id]"
                             class="px-3 py-2 bg-blue-300 rounded-md cursor-pointer">View</button>
                     </td>
                 </tr>
@@ -90,7 +97,7 @@
             class="border border-gray-300 rounded-xl p-4 mb-4 bg-white shadow-sm">
             <div class="flex justify-between items-center mb-2">
                 <h3 class="text-base font-semibold text-black-600">
-                    {{ i + 1 }}. {{ task.title }}
+                    {{ i + 1 }}. {{ task?.title }}
                 </h3>
                 <span [ngClass]="{
                 'bg-green-100 text-green-700': task?.completed,
@@ -100,29 +107,36 @@
                 </span>
             </div>
             <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-800">
-                <p><span class="font-medium">Due Date:</span> <br>{{ task.dueDate | date:'d, MMM yy' }}</p>
-                <p><span class="font-medium ">Assigned To:</span> <br>{{ task.assignedTo }}</p>
-                <p><span class="font-medium">No. of Rolls:</span> <br>{{ task.noOfRolls }}</p>
+                <p><span class="font-medium">Due Date:</span> <br>{{ task?.dueDate | date:'d, MMM yy' }}</p>
+                <p><span class="font-medium ">Assigned To:</span> <br> 
+                    <span *ngIf="task?.assignedTo">
+                    {{ task?.assignedTo?.name }}
+                    </span> 
+                    <span *ngIf="!task?.assignedTo" class="px-2 py-1 bg-red-300 rounded-xl" >
+                    N/A
+                    </span> 
+            </p>
+                <p><span class="font-medium">No. of Rolls:</span> <br>{{ task?.noOfRolls }}</p>
                 <p class="">
                     <span class="font-medium">Payment Status:</span>
                     <span [ngClass]="{
-                'text-green-700 font-medium': task.paymentStatus === 'Paid',
-                'text-yellow-600 font-medium': task.paymentStatus === 'Partial',
-                'text-red-600 font-medium': task.paymentStatus === 'Unpaid'
+                'text-green-700 font-medium': task?.paymentStatus === 'Paid',
+                'text-yellow-600 font-medium': task?.paymentStatus === 'Partial',
+                'text-red-600 font-medium': task?.paymentStatus === 'Unpaid'
               }" class="ml-1">
-                        {{ task.paymentStatus }}
+                        {{ task?.paymentStatus }}
                     </span>
                 </p>
-                <p><span class="font-medium">Cust. Name:</span> <br>{{ task.customer.name }}</p>
-                <p><span class="font-medium">Cust. Number:</span> <br>{{ task.customer.number }}</p>
+                <p><span class="font-medium">Cust. Name:</span> <br>{{ task?.customer?.name }}</p>
+                <p><span class="font-medium">Cust. phone:</span> <br>{{ task?.customer?.phone }}</p>
                 <p class="col-span-2">
                     <span class="font-medium">Cust. Address:</span> <br>{{
-                    task.customer.address }}
+                    task?.customer?.address }}
                 </p>
             </div>
 
             <div class="text-right mt-4">
-                <button [routerLink]="['task-detail', task._id]"
+                <button [routerLink]="['task-detail', task?._id]"
                     class="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-150 ease-in-out">
                     View
                 </button>

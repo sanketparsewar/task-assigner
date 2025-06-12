@@ -3,14 +3,14 @@ const Customer = require('../models/customer.model');
 // Controller to handle customer-related operations
 exports.createCustomer = async (req, res) => {
     try {
-        const { name, number, address } = req.body;
+        const { name, phone, address } = req.body;
 
         // Validate request body
-        if (!name || !number || !address) {
+        if (!name || !phone || !address) {
             return res.status(400).json({ message: 'All fields are required.' });
         }
 
-        const customer = new Customer({ name, number, address });
+        const customer = new Customer({ name, phone, address });
         await customer.save();
 
         res.status(201).json({ message: 'Customer created successfully.', customer });
@@ -22,7 +22,7 @@ exports.createCustomer = async (req, res) => {
     // Get all customers
     exports.getAllCustomers = async (req, res) => {
         try {
-            const customers = await Customer.find();
+            const customers = await Customer.find().sort({ name: 1 });
             res.status(200).json(customers);
         } catch (error) {
             res.status(500).json({ message: 'Error fetching customers.', error: error.message });
@@ -49,11 +49,11 @@ exports.createCustomer = async (req, res) => {
     exports.updateCustomer = async (req, res) => {
         try {
             const { id } = req.params;
-            const { name, number, address } = req.body;
+            const { name, phone, address } = req.body;
 
             const customer = await Customer.findByIdAndUpdate(
                 id,
-                { name, number, address },
+                { name, phone, address },
                 { new: true, runValidators: true }
             );
 

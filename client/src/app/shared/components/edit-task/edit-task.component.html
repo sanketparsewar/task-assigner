@@ -33,7 +33,7 @@
 
                                         <label class="block">
                                             <span class="block text-gray-700 font-medium mb-1">Due Date</span>
-                                            <input name="dueDate" type="date" formControlName="dueDate" 
+                                            <input name="dueDate" type="date" formControlName="dueDate"
                                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                                         </label>
 
@@ -58,7 +58,9 @@
                                             <span class="block text-gray-700 font-medium mb-1">Assign To</span>
                                             <select name="assignedTo" formControlName="assignedTo"
                                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                                <option *ngFor="let worker of workers" [value]="worker">{{ worker }}
+                                                <option [ngValue]="null" disabled>Select a worker</option>
+                                                <option *ngFor="let worker of workers" [ngValue]="worker">{{
+                                                    worker?.name }}
                                                 </option>
                                             </select>
                                         </label>
@@ -67,13 +69,13 @@
                                             <span class="block text-gray-700 font-medium mb-1">Customer</span>
                                             <select name="customer" formControlName="customer"
                                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                              <option [ngValue]="null" disabled>Select a customer</option>
-                                              <option *ngFor="let customer of customers" [ngValue]="customer">
-                                                {{ customer?.name }}
-                                              </option>
+                                                <option [ngValue]="null" disabled>Select a customer</option>
+                                                <option *ngFor="let customer of customers" [ngValue]="customer">
+                                                    {{ customer?.name }}
+                                                </option>
                                             </select>
-                                          </label>
-                                          
+                                        </label>
+
 
                                         <label class="block">
                                             <span class="block text-gray-700 font-medium mb-1">Room Type</span>
@@ -96,7 +98,8 @@
                                             <label class="block">
                                                 <span class="block text-gray-700 font-medium mb-1">Remaining
                                                     Payment</span>
-                                                <input name="remainingPayment" type="number" min="0" formControlName="remainingPayment"
+                                                <input name="remainingPayment" type="number" min="0"
+                                                    formControlName="remainingPayment"
                                                     class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400"
                                                     placeholder="123" />
                                             </label>

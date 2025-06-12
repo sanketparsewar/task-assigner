@@ -24,7 +24,7 @@
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500">Area Size</p>
-          <p class="text-base font-semibold text-gray-800">{{ task?.areaSize }} sq.ft</p>
+          <p class="text-base font-semibold text-gray-800">{{ task?.areaSize }} ft</p>
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500">Wallpaper Rolls</p>
@@ -32,7 +32,12 @@
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500">Assigned To</p>
-          <p class="text-base font-semibold text-gray-800">{{ task?.assignedTo }}</p>
+          <p class="text-base font-semibold text-gray-800"><span *ngIf="task?.assignedTo">
+            {{ task?.assignedTo?.name }}
+            </span> 
+            <span *ngIf="!task?.assignedTo" class="px-2 py-1 bg-red-300 rounded-xl" >
+            N/A
+            </span> </p>
         </div>
       </div>
     </div>
@@ -54,7 +59,7 @@
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.211-.99-.58-1.356l-2.281-2.281a1.5 1.5 0 00-2.122.212L15.342 15a1.5 1.5 0 01-1.83.626C10.024 14.232 8.767 12.976 7.334 9.667a1.5 1.5 0 01.626-1.83l2.853-1.68a1.5 1.5 0 00.212-2.122L9.113 2.83c-.366-.369-.84-.58-1.356-.58H6.388a2.25 2.25 0 00-2.25 2.25v2.25z" />
           </svg>
-          <span class="text-gray-700 text-sm">{{ task?.customer.number }}</span>
+          <span class="text-gray-700 text-sm">{{ task?.customer.phone }}</span>
         </div>
         <div class="flex items-start">
           <svg class="h-4 w-4 text-gray-500 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none"

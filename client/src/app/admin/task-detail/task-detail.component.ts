@@ -19,7 +19,7 @@ export class TaskDetailComponent {
   //   assignedTo: 'Alice',
   //   customer: {
   //     name: 'John Doe',
-  //     number: '1234567890',
+  //     phone: '1234567890',
   //     address: '123 Main St, Springfield'
   //   },
   //   noOfRolls: 5,

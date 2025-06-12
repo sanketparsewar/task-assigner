@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { DashboardService } from './../services/dashboard/dashboard.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,8 +7,22 @@ import { Component } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
-  totalTasks = 12;
-  completedTasks = 7;
-  pendingTasks = 5;
+export class DashboardComponent implements OnInit {
+  dashboardData:any;
+  constructor(private dashboardService: DashboardService) { }
+
+  ngOnInit(): void {
+    this.getDashboardData()
+  }
+  getDashboardData() {
+    this.dashboardService.getDashboardData().subscribe({
+      next: (data) => {
+        this.dashboardData=data
+      },
+      error: (error) => console.log(error)
+    })
+  }
+
+
+
 }
